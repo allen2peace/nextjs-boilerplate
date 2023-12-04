@@ -18,7 +18,7 @@ interface Props {
   setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export default () => {
+export default function Home() {
   const [inputDisabled, setInputDisabled] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [content, setContent] = useState("");
