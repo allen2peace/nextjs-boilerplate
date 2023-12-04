@@ -18,7 +18,7 @@ interface Props {
   setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export default ({ setGpts, setLoading }: Props) => {
+export default () => {
   const [inputDisabled, setInputDisabled] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [content, setContent] = useState("");
@@ -107,7 +107,7 @@ export default ({ setGpts, setLoading }: Props) => {
             className="absolute right-4 cursor-pointer"
             onClick={() => {
               if (content) {
-                handleSubmit("", content);
+                handleSubmit(content);
               }
             }}
           >
