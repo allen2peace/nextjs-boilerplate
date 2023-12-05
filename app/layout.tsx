@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import Header from './gpts/component/Header'
+import Footer from './gpts/component/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,11 +14,26 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <link rel="icon" type="image/png" sizes="16x16" href="/logo.png" />
+      </head>
+      <body className={inter.className}>
+        <main>
+          <Header />
+          {children}
+          <Footer />
+        </main>
+
+        <script
+          defer
+          data-domain="gpts.works"
+          src="https://plausible.io/js/script.js"
+        ></script>
+      </body>
     </html>
-  )
+  );
 }
