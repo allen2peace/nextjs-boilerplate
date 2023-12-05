@@ -11,6 +11,7 @@ import {
 } from "react";
 
 import { Gpts } from "@/app/gpts";
+import { error } from 'console';
 
 
 interface Props {
@@ -48,27 +49,44 @@ export default function Home() {
       //   question: question,
       // };
 
-      console.log('start fetch');
-      // setLoading(true);
-      const resp = await fetch(uri, {
-        method: "GET",
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   'Access-Control-Allow-Origin': '*',
-        //   'Access-Control-Allow-Credentials': 'true'
-        // }
-      });
-      // resp.headers.set('Access-Control-Allow-Origin', '*');
-      // setLoading(false);
-      console.log(resp);
-      if (resp.ok) {
-        const res = await resp.json();
-        // console.log(res);
-        console.log(res.info);
-        if (res.info) {
-          setInfo(res.info);
+      //另一种请求方式
+      await fetch(uri).then(response=>{
+        if(!response.ok){
+          throw new Error('Network response was not ok');
         }
-      }
+        return response.json();
+      })
+      .then(data=>{
+        console.log(data);
+        if (data.info) {
+          setInfo(data.info);
+        }
+      })
+      .catch(error=>{
+        console.error(error);
+      })
+
+      // console.log('start fetch');
+      // // setLoading(true);
+      // const resp = await fetch(uri, {
+      //   method: "GET",
+      //   // headers: {
+      //   //   'Content-Type': 'application/json',
+      //   //   'Access-Control-Allow-Origin': '*',
+      //   //   'Access-Control-Allow-Credentials': 'true'
+      //   // }
+      // });
+      // // resp.headers.set('Access-Control-Allow-Origin', '*');
+      // // setLoading(false);
+      // console.log(resp);
+      // if (resp.ok) {
+      //   const res = await resp.json();
+      //   // console.log(res);
+      //   console.log(res.info);
+      //   if (res.info) {
+      //     setInfo(res.info);
+      //   }
+      // }
     } catch (e) {
       console.log("search failed: ", e);
     }
@@ -87,7 +105,7 @@ export default function Home() {
           <input
             type="text"
             className="flex-1 px-4 py-3 border-2 border-primary bg-white rounded-lg"
-            placeholder="keyword or prompt for searching GPTs"
+            placeholder="input the domain name you want to query, eg: google.com"
             ref={inputRef}
             value={content}
             disabled={inputDisabled}
